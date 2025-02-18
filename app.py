@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify,render_template
+from flask import Flask, request, jsonify,render_template, url_for
 import numpy as np
 import pandas as pd
 import joblib
@@ -7,7 +7,8 @@ import tensorflow as tf
 app = Flask(__name__)
 
 # Load the trained LSTM model
-model = joblib.load('model.keras')
+#model = joblib.load('model.keras')
+model = tf.keras.models.load_model('model.keras')  # Load Keras model correctly
 
 # Load the scaler
 scaler = joblib.load('scaling.pkl')
@@ -21,7 +22,7 @@ def home():
 def predict_api():
     try:
         data = request.json['X']
-        input_data = np.array(data).reshape(1, 5, -1)  # Ensure the correct shape
+        input_data = np.array(data).reshape(1, 5, 1)  # Ensure the correct shape
 
         # Make prediction
         prediction = model.predict(input_data)
@@ -36,11 +37,14 @@ def predict_api():
 @app.route('/predict',methods = ['POST'])
 def predict():
     data=[float(x) for x in request.form.values()]
-    final_input= scaler.inverse_transform(prediction.reshape(-1, 1))
+    
+    data    = np.array(data).reshape(-1, 1)
+    final_input= scaler.transform(np.array(data).reshape(1, 5, 1))
     print(final_input)
-    prediction = model.predict(final_input)[0]
-    return render_template('home.html', prediction_text = "The Closing Stock value is {}".format(prediction))
-
+    prediction= model.predict(final_input)
+    
+    final_predition = scaler.inverse_transform(prediction.reshape(-1,   1))
+    
 
 if __name__=="__main__":
     app.run(debug=True)
