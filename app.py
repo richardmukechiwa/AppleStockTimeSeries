@@ -28,7 +28,7 @@ def predict_api():
         input_data = np.array(data).reshape(1, 5, 1)
         
         # Make prediction
-        prediction = model.predict(input_data)
+        prediction = model.predict(input_data)[0]
 
         # Inverse transform the prediction to get the actual scale
         scaled_pred = scaler.inverse_transform(np.array(prediction).reshape(-1, 1))
@@ -42,24 +42,24 @@ def predict_api():
 def predict():
     try:
         # Get data from form
-        data = [float(x) for x in request.form.values()]
+        data_array = [float(x) for x in request.form.values()]
         
         # Convert to NumPy array and reshape properly
-        data = np.array(data).reshape(-1, 1)
+        data = np.array(data_array).reshape(-1, 1)
         
         # Scale the input data
         scaled_data = scaler.transform(data).reshape(1, 5, 1)
 
         # Predict using the LSTM model
-        prediction = model.predict(scaled_data)
+        prediction = model.predict(scaled_data)[0]
 
         # Convert prediction back to original scale
         final_prediction = scaler.inverse_transform(prediction.reshape(-1, 1))
 
-        return render_template('home.html', prediction_text=f"The Closing Stock Value is ${final_prediction[0, 0]:.2f}")
+        return render_template('home.html', prediction=f"The Closing Stock Value is ${final_prediction[0, 0]:.2f}")
     
     except Exception as e:
-        return render_template('home.html', prediction_text=f"Error: {str(e)}")
+        return render_template('home.html', prediction=f"Error: {str(e)}")
 
 if __name__ == "__main__":
     app.run(debug=True)
