@@ -28,7 +28,7 @@ This project focuses on building a Long Short-Term Memory (LSTM) model to foreca
 
 ### Problem Statement
 
-Stock price prediction is a challenging task due to the noisy, volatile, and non-linear nature of the market. Traditional models struggle to capture sequential dependencies, making LSTMs an ideal choice. The dataset contains historical stock data with features such as:
+Stock price prediction is a challenging task due to the noisy, volatile, and non-linear nature of the market. Traditional models struggle to capture sequential dependencies, making LSTMs an ideal choice. The dataset contains   Apple historical stock data with features such as:
 
 - Date
 
