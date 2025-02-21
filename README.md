@@ -22,6 +22,11 @@ Navigate to the project directory
 ```python
 cd C:\Users\RICH-FILES\Desktop\ml\AppleStockTimeSeries
 ```
+Open the VS code 
+```python
+(base) C:\Users\RICH-FILES\Desktop\ml\AppleStockTimeSeries>code .
+```
+
 ### Project Overview
 
 This project focuses on building a Long Short-Term Memory (LSTM) model to forecast the closing stock prices of a company based on historical market data. The model helps in understanding price trends and provides insights for better financial decision-making.
