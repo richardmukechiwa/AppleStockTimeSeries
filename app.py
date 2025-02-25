@@ -7,7 +7,7 @@ import tensorflow as tf
 model = joblib.load("model.keras")
 scaler = joblib.load("scaling.pkl")
 
-st.title("Apple Stock Price Forecast")
+st.title("Stock Market Close Value Forecast")
 st.write("Enter the last 5 closing values to predict the next one.")
 
 # Create 5 inputs
